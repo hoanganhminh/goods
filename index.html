@@ -426,47 +426,7 @@
     =============================================
     -->
   <script>
-    const listImageURL = [
-      'assets/images/card/IMG_7353.JPG', //hidden1
-      'assets/images/card/IMG_7355.JPG',
-      'assets/images/card/IMG_7357.JPG',
-      'assets/images/card/IMG_7359.JPG',
-      'assets/images/card/IMG_7361.JPG',
-      'assets/images/card/IMG_7363.JPG',
-      'assets/images/card/IMG_7365.JPG', //hidden2
-      'assets/images/card/IMG_7367.JPG',
-      'assets/images/card/IMG_7369.JPG',
-      'assets/images/card/IMG_7371.JPG',
-      'assets/images/card/IMG_7373.JPG',
-      'assets/images/card/IMG_7375.JPG',
-      'assets/images/card/IMG_7377.JPG', //hidden3
-      'assets/images/card/IMG_7379.JPG',
-      'assets/images/card/IMG_7381.JPG',
-      'assets/images/card/IMG_7383.JPG',
-      'assets/images/card/IMG_7385.JPG',
-      'assets/images/card/IMG_7387.JPG',
-      'assets/images/card/IMG_7389.JPG', //hidden14
-      'assets/images/card/IMG_7391.JPG',
-      'assets/images/card/IMG_7393.JPG',
-      'assets/images/card/IMG_7395.JPG',
-      'assets/images/card/IMG_7397.JPG'
-    ];
-    console.log(listImageURL.length);
-    const showmore = document.getElementById('showmore');
-    var i = 0;
-    showmore.addEventListener("click", () => {
-      console.log("clicked");
-      i++;
-      var idname = "hidden" + i;
-      document.getElementById(idname).style = "display: block";
-
-      for (let j = 0; j < 6; j++) {
-        let imgClassName = "img" + idname + (j + 1);
-        console.log(imgClassName);
-        document.getElementById(imgClassName).style = 'content:url("' + listImageURL[0] + '")';
-        listImageURL.shift();
-        console.log(listImageURL.length);
-      }
+    function functionJs() {
       (function () {
         $(window).on('load', function () {
           $('.loader').fadeOut();
@@ -1061,6 +1021,63 @@
           });
         });
       })(jQuery);
+    }
+
+    function waitForImage(imgElem) {
+      return new Promise(res => {
+        if (imgElem.complete) {
+          return res();
+        }
+        imgElem.onload = () => res();
+        imgElem.onerror = () => res();
+      });
+    }
+    const listImageURL = [
+      'assets/images/card/IMG_7353.JPG', //hidden1
+      'assets/images/card/IMG_7355.JPG',
+      'assets/images/card/IMG_7357.JPG',
+      'assets/images/card/IMG_7359.JPG',
+      'assets/images/card/IMG_7361.JPG',
+      'assets/images/card/IMG_7363.JPG',
+      'assets/images/card/IMG_7365.JPG', //hidden2
+      'assets/images/card/IMG_7367.JPG',
+      'assets/images/card/IMG_7369.JPG',
+      'assets/images/card/IMG_7371.JPG',
+      'assets/images/card/IMG_7373.JPG',
+      'assets/images/card/IMG_7375.JPG',
+      'assets/images/card/IMG_7377.JPG', //hidden3
+      'assets/images/card/IMG_7379.JPG',
+      'assets/images/card/IMG_7381.JPG',
+      'assets/images/card/IMG_7383.JPG',
+      'assets/images/card/IMG_7385.JPG',
+      'assets/images/card/IMG_7387.JPG',
+      'assets/images/card/IMG_7389.JPG', //hidden14
+      'assets/images/card/IMG_7391.JPG',
+      'assets/images/card/IMG_7393.JPG',
+      'assets/images/card/IMG_7395.JPG',
+      'assets/images/card/IMG_7397.JPG'
+    ];
+    console.log(listImageURL.length);
+    const showmore = document.getElementById('showmore');
+    var i = 0;
+    showmore.addEventListener("click", () => {
+      (async () => {
+        console.log("clicked");
+        i++;
+        var idname = "hidden" + i;
+        document.getElementById(idname).style = "display: block";
+
+        for (let j = 0; j < 6; j++) {
+          let imgClassName = "img" + idname + (j + 1);
+          console.log(imgClassName);
+          document.getElementById(imgClassName).style = 'content:url("' + listImageURL[0] + '")';
+          listImageURL.shift();
+          console.log(listImageURL.length);          
+          await waitForImage(document.getElementById(imgClassName));
+          functionJs();
+        }
+        functionJs();
+      })();
     });
   </script>
   <script src="assets/lib/jquery/dist/jquery.js"></script>
